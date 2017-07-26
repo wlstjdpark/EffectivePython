@@ -92,6 +92,7 @@ r3 = BoundedResistance(3)
 class FixedResistance(Resistor):
     def __init__(self, ohms):
         super().__init__(ohms)
+        self.__ohms = 0
 
     @property
     def ohms(self):
@@ -104,7 +105,7 @@ class FixedResistance(Resistor):
         self._ohms = ohms
 
 r4 = FixedResistance(3)
-#r4.ohms = 3
+#r4.ohms = 5
 
 
 # property에서 다른 속성의 값을 변경하는 것은 사용자 입장에서 의도하지 않는 일이라 볼 수도 있다.
@@ -119,7 +120,7 @@ class MysteriousResistor(Resistor):
 
     @ohms.setter
     def ohms(self, ohms):
-        self._ohms = ohms;
+        self._ohms = ohms
 
 print('MysteriousResistor')
 r7 = MysteriousResistor(20)
@@ -129,8 +130,26 @@ r7.ohms
 print('After:  %5r' % r7.voltage)
 
 
+class testClass(object):
+    _private_test = 0
+    pass
+
+hi = testClass()
+hi._private_test = 0
+
+class testClass2(testClass):
+    __metaclass__ = 3
+
+
+print(testClass)
+print(testClass())
+
+print(testClass2)
+print(testClass2())
+
 
 # 객체의 상태를 수정하는 일은 setter에서 수행하자.
 # 모듈을 동적으로 임포트하거나, 느린 헬퍼 함수를 실행하거나, 비용이 많이 드는 작업처럼
 # 호출부에서 에측하지 못할만한 부작용은 피하자.
 # 느리거나 복잡한 작업은 메서드가 하도록하자.
+
